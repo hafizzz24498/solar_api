@@ -18,6 +18,8 @@ model Users {
   id        String   @id @default(uuid())
   username  String   @unique
   password  String?
+  firstName String
+  lastName  String
   role      String
   parentId  String?
   parent    Users?   @relation("UserTeamLead", fields: [parentId], references: [id])
