@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String?
+  role      String
+  parentId  String?
+  parent    Users?   @relation("UserTeamLead", fields: [parentId], references: [id])
+  subUsers  Users[]  @relation("UserTeamLead")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tasks MaintenanceTasks[] @relation("AssignedTasks")
+}
+
+model Customers {
+  id               String             @id @default(uuid())
+  name             String
+  province         String
+  address          String
+  latitude         Float?
+  longitude        Float?
+  phone            String
+  installDate      DateTime
+  lastCleanDate    DateTime
+  installations    Installations[]
+  MaintenanceTasks MaintenanceTasks[]
+}
+
+model Installations {
+  id              String    @id @default(uuid())
+  customerId      String
+  panels          Int
+  capacityKW      Float
+  status          String // Completed | Maintenance Due | Active | Inspection Required
+  efficiency      Float
+  nextMaintenance DateTime
+  customer        Customers @relation(fields: [customerId], references: [id])
+}
+
+model MaintenanceTasks {
+  id            String    @id @default(uuid())
+  scheduledDate DateTime
+  status        String // Pending | Completed | Cancelled
+  note          String?
+  customerId    String
+  customer      Customers @relation(fields: [customerId], references: [id])
+  assignedToId  String
+  assignedTo    Users     @relation("AssignedTasks", fields: [assignedToId], references: [id])
+}
