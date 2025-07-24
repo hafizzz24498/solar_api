@@ -60,7 +60,7 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<Users | null> {
-    return this.prismaService.users.findUnique({ where: { id } });
+    return this.prismaService.users.findUnique({ where: { id }, include: { parent: true } });
   }
 
   async updateUser(id: string, data: UserUpdateDto): Promise<Users | null> {
