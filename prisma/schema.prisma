@@ -27,7 +27,8 @@ model Users {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tasks MaintenanceTasks[] @relation("AssignedTasks")
+  tasks         MaintenanceTasks[] @relation("AssignedTasks")
+  Installations Installations[]    @relation("TechnicianInstallations")
 }
 
 model Customers {
@@ -38,8 +39,7 @@ model Customers {
   latitude         Float?
   longitude        Float?
   phone            String
-  installDate      DateTime
-  lastCleanDate    DateTime
+  lastCleanDate    DateTime?
   installations    Installations[]
   MaintenanceTasks MaintenanceTasks[]
 }
@@ -47,16 +47,20 @@ model Customers {
 model Installations {
   id              String    @id @default(uuid())
   customerId      String
+  technicianId    String
+  technician      Users     @relation("TechnicianInstallations", fields: [technicianId], references: [id])
   panels          Int
   capacityKW      Float
   status          String // Completed | Maintenance Due | Active | Inspection Required
   efficiency      Float
-  nextMaintenance DateTime
+  nextMaintenance DateTime?
   customer        Customers @relation(fields: [customerId], references: [id])
 }
 
 model MaintenanceTasks {
   id            String    @id @default(uuid())
+  type          String
+  priority      String // Low | Medium | High
   scheduledDate DateTime
   status        String // Pending | Completed | Cancelled
   note          String?
@@ -65,3 +69,4 @@ model MaintenanceTasks {
   assignedToId  String
   assignedTo    Users     @relation("AssignedTasks", fields: [assignedToId], references: [id])
 }
+ 

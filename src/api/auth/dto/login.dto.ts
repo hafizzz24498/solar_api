@@ -4,14 +4,14 @@ export class LoginDto{
     @ApiProperty({
         description: 'The username of the user',
         required: true,
-        example: 'john_doe',
+        example: 'weat',
     })
     username: string;
 
     @ApiProperty({
         description: 'The password of the user',
         required: true,
-        example: 'password123',
+        example: 'Password_123',
     })
     password: string;
 }

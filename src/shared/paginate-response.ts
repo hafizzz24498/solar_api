@@ -3,8 +3,8 @@ export interface PaginationMeta {
   lastPage: number;
   currentPage: number;
   perPage: number;
-  prev: number | null;
-  next: number | null;
+  prev: boolean;
+  next: boolean;
 }
 
 export interface PaginatedResponse<T> {
@@ -28,8 +28,8 @@ export function paginateResponse<T>(
       lastPage,
       currentPage: page,
       perPage: limit,
-      prev: page > 1 ? page - 1 : null,
-      next: page < lastPage ? page + 1 : null,
+      prev: page > 1 ? true : false,
+      next: page < lastPage ? true : false,
     },
   };
 }

@@ -6,4 +6,8 @@ export enum ReturnMessage {
     ERROR = "ข้อผิดพลาด",
     REQUIRED = "จำเป็นต้องระบุ",
     NOT_REQUIRED = "ไม่จำเป็นต้องระบุ",
+    CUSTOMER_NOT_FOUND = "ไม่พบลูกค้า",
+    TECHNICIAN_NOT_FOUND = "ไม่พบช่างเทคนิค",
+    INSTALLATION_NOT_FOUND = "ไม่พบการติดตั้ง",
+    MAINTENANCE_NOT_FOUND = "ไม่พบการบำรุงรักษา",
 }

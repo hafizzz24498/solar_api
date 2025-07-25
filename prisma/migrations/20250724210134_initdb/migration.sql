@@ -3,6 +3,8 @@ CREATE TABLE "Users" (
     "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "role" TEXT NOT NULL,
     "parentId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
